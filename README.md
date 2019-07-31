@@ -11,4 +11,12 @@
 
 # zsh
 - install oh-my-zsh for SO
+-- https://ohmyz.sh/
+
 - copy .zshrc in your directory root user like "~/"
+- if you want to default zsh make this:
+- for your user
+- sudo chsh -s $(which zsh)
+- if you want to default zsh for root user make this:
+- sudo chsh -s $(which zsh) root
+
