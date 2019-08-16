@@ -1,7 +1,7 @@
 # vim
 - copy .vimrc in directory root user like "~/"
 - copy link in your teminal
--- git clone git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+-- git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 - and run vim
 - if a plugin youcompleteme fails, in ~/.vim/plugged/youcompleteme
