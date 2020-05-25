@@ -52,6 +52,7 @@ Plug 'kien/tabman.vim'
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
 " Terminal Vim with 256 colors colorscheme
 Plug 'fisadev/fisa-vim-colorscheme'
 " Consoles as buffers
@@ -89,6 +90,7 @@ Plug 'scrooloose/syntastic'
 Plug 'lilydjwg/colorizer'
 " Ack code search (requires ack installed in the system)
 Plug 'mileszs/ack.vim'
+
 if has('python')
     " YAPF formatter for Python
     Plug 'pignacio/vim-yapf-format'
@@ -124,13 +126,39 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-fireplace'
 " vim jsx
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
+" vim-jsx-pretty
+" Plug 'maxmellon/vim-jsx-pretty'
+
+" Flutter and dart
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+
+" vim-tsx
+Plug 'ianks/vim-tsx'
+
+" vim for elm
+Plug 'elmcast/elm-vim'
+
+" ale for vim
+Plug 'dense-analysis/ale'
+
+" vim prettier
+Plug 'prettier/vim-prettier'
+
+"golang
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Nord
+Plug 'arcticicestudio/nord-vim'
+"Formatter
+Plug 'psf/black', {'branch': 'stable'}
 
 " Tell vim-plug we finished declaring plugins, so it can load them
 call plug#end()
 
 " ============================================================================
 " Install plugins the first time vim runs
+" go variables
 
 if vim_plug_just_installed
     echo "Installing Bundles, please ignore key map error messages"
@@ -168,13 +196,28 @@ let g:vim_debug_disable_mappings = 1
 
 " youcompleteme
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_semantic_triggers = {
+     \ 'elm' : ['.'],
+     \}
+
+" elm
+let g:polyglot_disabled = ['elm']
+let g:elm_jump_to_error = 0
+let g:elm_make_output_file = "elm.js"
+let g:elm_make_show_warnings = 0
+let g:elm_syntastic_show_warnings = 1
+let g:elm_browser_command = ""
+let g:elm_detailed_complete = 1
+let g:elm_format_autosave = 1
+let g:elm_format_fail_silently = 0
+let g:elm_setup_keybindings = 1
 
 " vim jsx
-let g:jsx_ext_required = 0
-let g:jsx_pragma_required = 1
+" let g:jsx_ext_required = 0
+" let g:jsx_pragma_required = 0
 
 " emmet-vim
-let g:user_emmet_install_global = 0
+let g:user_emmet_install_global = 1
 let g:user_emmet_settings = {
             \  'javascript.jsx' : {
             \      'extends': 'jsx',
@@ -182,7 +225,7 @@ let g:user_emmet_settings = {
             \  },
             \}
 let g:user_emmet_leader_key='<C-Z>'
-autocmd FileType html,css,js,javascript.jsx EmmetInstall
+autocmd FileType html,css,javascript.js,javascript.jsx,typescript.ts,javascript.tsx,typescript.tsx EmmetInstall
 
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
@@ -265,13 +308,15 @@ ca w!! w !sudo tee "%"
 nmap ,r :Ack 
 nmap ,wr :Ack <cword><CR>
 
+" nord colorscheme
+colorscheme nord
 " use 256 colors when possible
-if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
-	let &t_Co = 256
-    colorscheme fisa
-else
-    colorscheme delek
-endif
+"if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
+	"let &t_Co = 256
+    "colorscheme fisa
+"else
+    "colorscheme delek
+"endif
 
 " colors for gvim
 if has('gui_running')
@@ -463,7 +508,7 @@ let g:choosewin_overlay_enable = 1
 " Airline ------------------------------
 
 let g:airline_powerline_fonts = 0
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'dark'
 let g:airline#extensions#whitespace#enabled = 0
 
 " to use fancy symbols for airline, uncomment the following lines and use a
@@ -482,3 +527,34 @@ let g:airline#extensions#whitespace#enabled = 0
 autocmd VimEnter * NERDTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Flutter and dart config
+nnoremap <leader>fa :FlutterRun<cr>
+nnoremap <leader>fq :FlutterQuit<cr>
+nnoremap <leader>fr :FlutterHotReload<cr>
+nnoremap <leader>fR :FlutterHotRestart<cr>
+nnoremap <leader>fD :FlutterVisualDebug<cr>
+
+" vim-jsx-pretty
+" let g:vim_jsx_pretty_highlight_close_tag = 1
+" let g:vim_jsx_pretty_enable_jsx_highlight = 0 " default 1
+
+" vim typescript
+let g:typescript_indent_disable = 1
+
+" vim prettier
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+" print semicolons
+let g:prettier#config#semi = 'false'
+ " print spaces between brackets
+let g:prettier#config#bracket_spacing = 'false'
+" single quotes over double quotes
+let g:prettier#config#single_quote = 'true'
+
+"go imports
+let g:go_list_type = "quickfix"
+
+"black config
+autocmd BufWritePre *.py execute ':Black'
+nnoremap <F9> :Black<CR>
