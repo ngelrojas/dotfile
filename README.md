@@ -1,4 +1,4 @@
-# vim
+### vim
 - copy .vimrc in directory root user like "~/"
 - copy link in your teminal
 -- git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -9,7 +9,7 @@
 - run sh install.sh or
 - run . install.sh
 
-# zsh
+### zsh
 - install oh-my-zsh for SO
 -- https://ohmyz.sh/
 
@@ -20,3 +20,10 @@
 - if you want to default zsh for root user make this:
 - sudo chsh -s $(which zsh) root
 
+### config neovim
+- copy nvim file in: your-user/.config/
+- install balck using the current doc: https://black.readthedocs.io/en/stable/integrations/editors.html#vim
+- then:
+-- :PlugInstall
+-- extra help command
+-- :PlugUpdate
